@@ -28,3 +28,51 @@ function sayHello4(name: string, ...names: string[]) {
 }
 sayHello4("Tom")
 sayHello4("Tom", "Jerry", "Bill")
+
+
+//缩小范围
+function padLeft(padding: number | string, input: string) {
+    if (typeof padding === 'number') {
+        return " ".repeat(padding) + input;
+    } else {
+        return padding + input;
+    }
+}
+
+//类型谓词
+interface Fish {
+    swim(): void;
+}
+interface Bird {
+    fly(): void;
+}
+
+function isFish(arg: Fish | Bird): arg is Fish {
+    return (arg as Fish).swim !== undefined;
+}
+
+function getAnimal(): Fish | Bird {
+    if (Math.random() < 0.5) {
+        return {
+            swim() {
+                console.log("i am fish")
+            }
+        } as Fish
+    } else {
+        return {
+            fly() {
+                console.log("i am bird");
+            }
+        } as Bird;
+    }
+}
+
+let animal = getAnimal();
+//这里其实就是类型谓词的作用，通过arg is Fish告诉编译器，如果返回true 则这个参数是Fish类型
+//因此通过调用isFish可以在里面安全的调用animal.swim() 但如果不使用类型谓词只返回true/false ，则调用isFish会返回结果依然无法确定是什么类型
+//依然无法在里面安全的调用animal.swim()
+if (isFish(animal)) {
+    animal.swim();
+} else {
+    animal.fly();
+}
