@@ -1,0 +1,1 @@
+本仓库是[TypeScript 使用指南手册 (patrickzhong.com)](http://www.patrickzhong.com/TypeScript/)的笔记和demo代码
